@@ -11,12 +11,12 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-routerConfig:goRouter,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.blue,
-          scaffoldBackgroundColor: Color(0xFFF5F5F5),
-        ),
-        );
+      routerConfig: goRouter,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Color(0x9E0560FD),
+        scaffoldBackgroundColor: Color(0xFFF5F5F5),
+      ),
+    );
   }
 }

@@ -17,7 +17,7 @@ final goRouter = GoRouter(initialLocation: '/', routes: [
    
   ),
    GoRoute(
-    path: '/',
+    path: '/welcome_screen',
     builder: (context, state) => WelcomeScreen(),
     name: RouteName.welcome,
    
