@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/presentation/screens/main_screen.dart';
+import 'package:todo/config/router.dart';
 
 void main() {
   runApp(Main());
@@ -10,12 +10,13 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+routerConfig:goRouter,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.blue,
           scaffoldBackgroundColor: Color(0xFFF5F5F5),
         ),
-        home: MainScreen());
+        );
   }
 }
