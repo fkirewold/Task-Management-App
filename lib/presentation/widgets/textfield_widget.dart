@@ -13,7 +13,7 @@ class TextfieldWidget extends StatelessWidget {
   decoration: InputDecoration(
     hintText: hintText,
     filled: true,
-    fillColor: Colors.white,
+    fillColor: Color(0XF6F6F6F6),
   ),
     );
   }

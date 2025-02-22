@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/presentation/widgets/button_widget.dart';
 import 'package:todo/presentation/widgets/text_widget.dart';
 import 'package:todo/presentation/widgets/textfield_widget.dart';
 
@@ -8,14 +9,35 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-  body: Column(
-    children: [
-      TextWidget(text: 'Wellcome Task Manament',fontSize: 14,),
-      SizedBox(height: 57,),
-      TextfieldWidget(hintText: 'Enter your Name please', controller: TextEditingController())
+        body: Column(
+          crossAxisAlignment:CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top:100,left:20),
+          child: TextWidget(
+            text: 'Welcome Task Manament',
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextfieldWidget(
+              hintText: 'Enter your Name',
+              controller: TextEditingController()),
+        ),
+        Spacer(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ButtonWidget(
+            height: 44.00,
+            onPressed: (){}, 
+            child: TextWidget(text: 'Continue',)),
+        )
       ],
-  )
-    );
-}
+    ));
+  }
 }

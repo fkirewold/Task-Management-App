@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 class ButtonWidget extends StatelessWidget {
   final Function() onPressed;
   final Widget child;
-  const ButtonWidget({super.key, required this.onPressed, required this.child});
+  final double? height;
+  const ButtonWidget({super.key, required this.onPressed, required this.child, this.height});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: 100,
+      height: height??100,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             shape: ContinuousRectangleBorder(
