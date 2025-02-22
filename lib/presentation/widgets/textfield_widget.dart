@@ -11,9 +11,10 @@ class TextfieldWidget extends StatelessWidget {
     return TextField(
   controller: controller,
   decoration: InputDecoration(
+    border:InputBorder.none,
     hintText: hintText,
     filled: true,
-    fillColor: Color(0XF6F6F6F6),
+    fillColor: Color.fromARGB(246, 230, 227, 228),
   ),
     );
   }

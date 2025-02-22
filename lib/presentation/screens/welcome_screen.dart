@@ -13,7 +13,7 @@ class WelcomeScreen extends StatelessWidget {
           crossAxisAlignment:CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top:100,left:20),
+          padding: const EdgeInsets.only(top:130,left:15),
           child: TextWidget(
             text: 'Welcome Task Manament',
             fontSize: 14,
@@ -21,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 50,
+          height: 40,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
