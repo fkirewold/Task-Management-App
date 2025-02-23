@@ -11,7 +11,7 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: goRouter,
+      routerConfig: Routes.goRouter,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor:Color.fromARGB(255, 18, 99, 240) ,

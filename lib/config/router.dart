@@ -5,26 +5,33 @@ import 'package:todo/presentation/screens/welcome_screen.dart';
 
 class RouteName {
   static const splash = 'splash_screen';
- static const welcome='welcome_screen';
- static const task='Task_Screen';
+  static const welcome = 'welcome_screen';
+  static const task = 'Task_Screen';
 }
 
-final goRouter = GoRouter(initialLocation: '/', routes: [
+class Routes
+{
+static final goRouter = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: '/',
     builder: (context, state) => SplashScreen(),
     name: RouteName.splash,
-   
   ),
-   GoRoute(
+  GoRoute(
     path: '/welcome_screen',
     builder: (context, state) => WelcomeScreen(),
     name: RouteName.welcome,
-   
   ),
-   GoRoute(
+  GoRoute(
     path: '/',
     builder: (context, state) => TaskScreen(),
     name: RouteName.task,
   ),
 ]);
+
+}
+
+
+
+
+
