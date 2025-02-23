@@ -7,15 +7,18 @@ class ContainerWidget extends StatelessWidget {
   final Color? color;
   final BoxShape? shape;
   final Widget? child;
-  const ContainerWidget({super.key, this.height, this.width, this.color, this.shape, this.child});
+  final Border? border;
+  const ContainerWidget({super.key, this.height, this.width, this.color, this.shape, this.child, this.border});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: height,
+      
       width: width,
       decoration: BoxDecoration(
         color: color,
+        border: border,
         shape:shape??BoxShape.rectangle ,
       ),
       child:child,

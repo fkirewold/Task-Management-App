@@ -23,7 +23,7 @@ static final goRouter = GoRouter(initialLocation: '/', routes: [
     name: RouteName.welcome,
   ),
   GoRoute(
-    path: '/',
+    path: '/task_screen',
     builder: (context, state) => TaskScreen(),
     name: RouteName.task,
   ),

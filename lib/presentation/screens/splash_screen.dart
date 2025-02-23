@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo/config/router.dart';
+import 'package:todo/core/settings.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,9 +16,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 3000), () {
-      if (mounted) {
-        GoRouter.of(context).goNamed('welcome_screen');
+    Future.delayed(const Duration(milliseconds: 3000), () async {
+      if (await Settings.getUserName() != null) {
+        // ignore: use_build_context_synchronously
+        context.goNamed(RouteName.task);
+      } else {
+        if (mounted) {
+          context.goNamed(RouteName.welcome);
+        }
       }
     });
   }

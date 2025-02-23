@@ -3,18 +3,22 @@ import 'package:flutter/material.dart';
 class TextfieldWidget extends StatelessWidget {
 
   final String hintText;
+  final String? Function (String? )? validator;
   final TextEditingController controller;
-  const TextfieldWidget({super.key, required this.hintText, required this.controller});
+  final Widget? lebel;
+  const TextfieldWidget({super.key, required this.hintText, required this.controller, this.validator, this.lebel});
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(  
+   validator:validator ,
   controller: controller,
   decoration: InputDecoration(
     border:InputBorder.none,
     hintText: hintText,
+    label: lebel,
     filled: true,
-    fillColor: Color.fromARGB(246, 230, 227, 228),
+    fillColor: Color(0xffF6F6F6),
   ),
     );
   }

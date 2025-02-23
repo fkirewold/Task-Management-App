@@ -14,8 +14,7 @@ class Main extends StatelessWidget {
       routerConfig: Routes.goRouter,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor:Color.fromARGB(255, 18, 99, 240) ,
-       
+        primaryColor:Color(0xff0759FF) ,
         // second: Color(0x9E0560FD),
         scaffoldBackgroundColor: Color(0xFFF5F5F5),
       ),
