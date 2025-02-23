@@ -56,6 +56,7 @@ class WelcomeScreen extends StatelessWidget {
                 },
                 child: TextWidget(
                   text: 'Continue',
+                  color: Colors.white,
                 )),
           )
         ],

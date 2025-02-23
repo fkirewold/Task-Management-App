@@ -5,23 +5,35 @@ class ContainerWidget extends StatelessWidget {
   final double? height;
   final double? width;
   final Color? color;
+  final BorderRadius? borderRadius;
   final BoxShape? shape;
   final Widget? child;
   final Border? border;
-  const ContainerWidget({super.key, this.height, this.width, this.color, this.shape, this.child, this.border});
+  final EdgeInsetsGeometry? padding;
+  const ContainerWidget(
+      {super.key,
+      this.height,
+      this.width,
+      this.color,
+      this.shape,
+      this.child,
+      this.border,
+      this.padding,
+      this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: height,
-      
       width: width,
+      padding: padding,
       decoration: BoxDecoration(
         color: color,
         border: border,
-        shape:shape??BoxShape.rectangle ,
+        shape: shape ?? BoxShape.rectangle,
+        borderRadius: borderRadius,
       ),
-      child:child,
+      child: child,
     );
   }
 }

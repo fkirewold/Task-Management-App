@@ -4,7 +4,8 @@ class TextWidget extends StatelessWidget {
   final String text;
   final double? fontSize;
   final FontWeight? fontWeight;
-  const TextWidget({super.key, required this.text, this.fontSize, this.fontWeight});
+  final Color? color;
+  const TextWidget({super.key, required this.text, this.fontSize, this.fontWeight, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class TextWidget extends StatelessWidget {
       style:Theme.of(context).textTheme.titleMedium!.copyWith(
         fontSize:  fontSize,
         fontWeight: fontWeight,
+        color: color,
       )
     );
   }
