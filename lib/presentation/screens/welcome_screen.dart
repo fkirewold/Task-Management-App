@@ -29,9 +29,10 @@ class WelcomeScreen extends StatelessWidget {
               hintText: 'Enter your Name',
               controller: TextEditingController()),
         ),
-        Spacer(),
+        Expanded(
+          child: SizedBox.shrink()),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(bottom: 20,left: 8,right: 8),
           child: ButtonWidget(
             height: 44.00,
             onPressed: (){}, 
