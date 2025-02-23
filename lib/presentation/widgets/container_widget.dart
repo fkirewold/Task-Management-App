@@ -18,6 +18,7 @@ class ContainerWidget extends StatelessWidget {
         color: color,
         shape:shape??BoxShape.rectangle ,
       ),
+      child:child,
     );
   }
 }
