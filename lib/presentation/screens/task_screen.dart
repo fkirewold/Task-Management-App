@@ -55,15 +55,18 @@ class TaskScreen extends StatelessWidget {
           
         ],
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextfieldWidget(
-            hintText: 'find Your task here..',
-            controller: controller,
-            lebel: Icon(Icons.search,size: 25,),)
-        ],),
+      body: Padding(
+        padding: EdgeInsets.only(left: 10,right:10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextfieldWidget(
+              hintText: 'find Your task here..',
+              controller: controller,
+              lebel: Icon(Icons.search,size: 25,),)
+          ],),
+      ),
     );
   }
 }
