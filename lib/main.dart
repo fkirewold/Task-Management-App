@@ -9,7 +9,6 @@ void main() {
 
 class Main extends StatelessWidget {
   const Main({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

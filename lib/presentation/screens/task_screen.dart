@@ -24,11 +24,14 @@ class _TaskScreenState extends State<TaskScreen> {
   void initState() {
     context.read<TaskBloc>().add(GetTasks());
     super.initState();
+    
   }
+  
 
   @override
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
+  
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -57,13 +60,26 @@ class _TaskScreenState extends State<TaskScreen> {
             child: FutureBuilder(
                 future: Settings.getUserName(),
                 builder: (context, snapshot) {
-                  String firstNameLetter =
-                      snapshot.data!.substring(0, 1).toUpperCase() ?? '**';
-                  return Center(
+
+                  if(snapshot.connectionState==ConnectionState.active)
+                  {  if(snapshot.hasData)
+                        {
+                           String firstNameLetter =
+                      snapshot.data!.substring(0, 1).toUpperCase();
+                       return Center(
                       child: TextWidget(
                     text: firstNameLetter,
                     fontSize: 26,
                   ));
+
+                        }
+                  }
+                  return Center(
+                    child: TextWidget(text:'***',fontSize:26,
+                  ));
+                  
+                      
+                 
                 }),
           ),
         ),
@@ -99,10 +115,13 @@ class _TaskScreenState extends State<TaskScreen> {
                 size: 25,
               ),
             ),
-            TextWidget(
-              text: 'Your Task',
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: TextWidget(
+                text: 'Your Task',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8),

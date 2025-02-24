@@ -13,5 +13,11 @@ final class EditTask extends TaskEvent {
 
   EditTask({required this.task});
 }
+final class DeleteTask extends TaskEvent{
+  final int id;
+
+  DeleteTask({required this.id});
+
+}
 
 final class GetTasks extends TaskEvent {}

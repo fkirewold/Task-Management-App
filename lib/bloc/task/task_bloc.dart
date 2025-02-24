@@ -12,7 +12,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         )) {
     on<AddTask>(_onAddTask);
     on<EditTask>(_onEditTask);
+    on<DeleteTask>(_onDeleteTask);
     on<GetTasks>(_onGetTasks);
+
+    
   }
   _onEditTask(EditTask event, Emitter emit) async {
     final tasks =
@@ -32,6 +35,14 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         tasks: tasks,
       ),
     );
+  }
+  _onDeleteTask(DeleteTask event,Emitter emit)
+  {
+final tasks=state.tasks;
+tasks.removeWhere((t)=>t.id==event.id);
+emit(state.copyWith(tasks:tasks));
+
+
   }
 
   _onGetTasks(GetTasks event, Emitter emit) async {
