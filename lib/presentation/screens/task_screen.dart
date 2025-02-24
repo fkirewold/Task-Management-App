@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo/config/router.dart';
 import 'package:todo/core/settings.dart';
 import 'package:todo/core/utils/show_bottom_task_shit.dart';
 import 'package:todo/presentation/widgets/button_widget.dart';
 import 'package:todo/presentation/widgets/container_widget.dart';
 import 'package:todo/presentation/widgets/task_tile_widget.dart';
 import 'package:todo/presentation/widgets/text_widget.dart';
-
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../bloc/task/task_bloc.dart';
 
@@ -32,7 +34,6 @@ class _TaskScreenState extends State<TaskScreen> {
     });
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -233,6 +234,56 @@ class _TaskScreenState extends State<TaskScreen> {
         shape: CircleBorder(),
         backgroundColor: Theme.of(context).primaryColor,
         child: Icon(Icons.add, color: Colors.white),
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: GNav(
+            gap: 7,
+            padding: EdgeInsets.all(10),
+            color: Colors.white,
+            activeColor: Colors.pink,
+            tabBackgroundColor: const Color.fromARGB(255, 239, 232, 232),
+            tabs: [
+              GButton(
+                iconColor: Colors.blue,
+                icon: Icons.home,
+                text: 'Home',
+                iconSize: 30,
+                onPressed: () {},
+              ),
+              GButton(
+                onPressed: () {},
+                leading: SizedBox(
+                  child: Image.asset(
+                    width: 40,
+                    height: 30,
+                    'assets/images/taskicon.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                icon: Icons.favorite,
+                text: 'Tasks',
+              ),
+              GButton(
+                onPressed: () {
+                  context.goNamed(RouteName.blog);
+                },
+                leading: SizedBox(
+                  child: Image.asset(
+                    width: 40,
+                    height: 30,
+                    'assets/images/blogicon.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                icon: Icons.find_in_page,
+                text: 'Blog',
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
