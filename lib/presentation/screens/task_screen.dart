@@ -31,7 +31,7 @@ class _TaskScreenState extends State<TaskScreen> {
     TextEditingController controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -54,7 +54,15 @@ class _TaskScreenState extends State<TaskScreen> {
             width: 10,
             color: Colors.yellow,
             shape: BoxShape.circle,
-            child: TextWidget(text: 'Derto'),
+            child: FutureBuilder(
+              future:Settings.getUserName(),
+            builder: (context,snapshot)
+            { 
+              String firstNameLetter=snapshot.data!.substring(0, 1).toUpperCase()??'**';
+              return TextWidget(text: firstNameLetter,fontSize: 16,);
+
+              
+            }),
           ),
         ),
         actions: [
