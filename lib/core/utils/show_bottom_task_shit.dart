@@ -135,6 +135,8 @@ showTaskBottomSheet(BuildContext context) {
                         ],
                       ),
                       SizedBox(height: 15),
+                      TextWidget(text:'Task Priority',fontSize:16,
+                      fontWeight:FontWeight.bold),
                       DropdownButton(
                           value: priority,
                           isExpanded: true,
