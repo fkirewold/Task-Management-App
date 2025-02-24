@@ -16,15 +16,27 @@ class TasktileWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       color: const Color.fromARGB(255, 209, 206, 206),
       child: Column(children: [
-        TextWidget(text: task.title),
-        TextWidget(text: task.description),
+        Align(
+            alignment: Alignment.topLeft,
+            child: TextWidget(
+              text: task.title,
+              fontSize: 20,
+              fontWeight: FontWeight.normal,
+            )),
+        TextWidget(
+          text: task.description,
+          fontWeight: FontWeight.normal,
+        ),
+        SizedBox(
+          height: 7,
+        ),
         Row(
           children: [
             Icon(
               Icons.work_history,
               color: Theme.of(context).primaryColor,
             ),
-            TextWidget(text: DateFormat('dd MMM yyyy').format(task.startDate)),
+            TextWidget(text: DateFormat('dd MMM yyyy').format(task.startDate),fontSize: 12,),
             Icon(
               Icons.flag,
               color: Theme.of(context).primaryColor,
@@ -32,13 +44,22 @@ class TasktileWidget extends StatelessWidget {
             TextWidget(text: DateFormat('dd MMM yyyy').format(task.endDate)),
             Spacer(),
             ButtonWidget(
+                height: 35,
+                width: 66,
                 color: task.priority == 'Medium'
                     ? Color(0xffCC00FF)
                     : task.priority == 'Low'
                         ? Colors.amber
                         : null,
                 onPressed: () {},
-                child: TextWidget(text: task.priority))
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: TextWidget(
+                    text: task.priority,
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ))
           ],
         ),
         Row(

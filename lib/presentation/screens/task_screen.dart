@@ -55,14 +55,16 @@ class _TaskScreenState extends State<TaskScreen> {
             color: Colors.yellow,
             shape: BoxShape.circle,
             child: FutureBuilder(
-              future:Settings.getUserName(),
-            builder: (context,snapshot)
-            { 
-              String firstNameLetter=snapshot.data!.substring(0, 1).toUpperCase()??'**';
-              return TextWidget(text: firstNameLetter,fontSize: 16,);
-
-              
-            }),
+                future: Settings.getUserName(),
+                builder: (context, snapshot) {
+                  String firstNameLetter =
+                      snapshot.data!.substring(0, 1).toUpperCase() ?? '**';
+                  return Center(
+                      child: TextWidget(
+                    text: firstNameLetter,
+                    fontSize: 26,
+                  ));
+                }),
           ),
         ),
         actions: [
