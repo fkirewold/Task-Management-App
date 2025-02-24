@@ -5,6 +5,7 @@ class ContainerWidget extends StatelessWidget {
   final double? height;
   final double? width;
   final Color? color;
+  final DecorationImage? image;
   final BorderRadius? borderRadius;
   final BoxShape? shape;
   final Widget? child;
@@ -19,7 +20,7 @@ class ContainerWidget extends StatelessWidget {
       this.child,
       this.border,
       this.padding,
-      this.borderRadius});
+      this.borderRadius, this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class ContainerWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         border: border,
+        image: image,
         shape: shape ?? BoxShape.rectangle,
         borderRadius: borderRadius,
       ),

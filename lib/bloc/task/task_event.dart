@@ -13,11 +13,23 @@ final class EditTask extends TaskEvent {
 
   EditTask({required this.task});
 }
-final class DeleteTask extends TaskEvent{
+
+final class DeleteTask extends TaskEvent {
   final int id;
 
   DeleteTask({required this.id});
+}
 
+final class TaskFilter extends TaskEvent {
+  final String filter;
+
+  TaskFilter({required this.filter});
 }
 
 final class GetTasks extends TaskEvent {}
+
+final class SearchTask extends TaskEvent {
+  final String query;
+
+  SearchTask({required this.query});
+}

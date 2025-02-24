@@ -9,114 +9,124 @@ import 'package:todo/presentation/widgets/button_widget.dart';
 import 'package:todo/presentation/widgets/container_widget.dart';
 import 'package:todo/presentation/widgets/text_widget.dart';
 
-class TasktileWidget extends StatelessWidget {
+class TasktileWidget extends StatefulWidget {
   final TaskModel task;
   const TasktileWidget({super.key, required this.task});
 
   @override
+  State<TasktileWidget> createState() => _TasktileWidgetState();
+}
+
+class _TasktileWidgetState extends State<TasktileWidget> {
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: ContainerWidget(
-        padding: EdgeInsets.all(10),
-        // height: 180,
-        border: Border.all(color: Color(0xffD4D4D4)),
-        borderRadius: BorderRadius.circular(15),
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child: Wrap(children: [
-          Row(
-            children: [
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: TextWidget(
-                    text: task.title.capitalizeFirstLetter(),
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                  )),
-              Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: ContainerWidget(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Color(0xffD4D4D4)),
-                  child: Icon(
-                    Icons.more_horiz,
-                    color: Color(0xff252525),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          TextWidget(
-            text: task.description,
-            fontWeight: FontWeight.normal,
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.work_history,
-                color: Theme.of(context).primaryColor,
-              ),
-              TextWidget(
-                text: DateFormat('dd MMM yyyy').format(task.startDate),
-                fontSize: 12,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(
-                Icons.flag,
-                color: Theme.of(context).primaryColor,
-              ),
-              TextWidget(
-                text: DateFormat('dd MMM yyyy').format(task.endDate),
-                fontSize: 12,
-              ),
-              Spacer(),
-              ButtonWidget(
-                  height: 35,
-                  width: 66,
-                  color: task.priority == 'Medium'
-                      ? Color(0xffCC00FF)
-                      : task.priority == 'Low'
-                          ? Colors.amber
-                          : null,
-                  onPressed: () {},
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
+    return GestureDetector(
+      onTap: () {
+        final updateTask = widget.task.copyWith(
+          isCompleted: !widget.task.isCompleted,
+        );
+        context.read<TaskBloc>().add(EditTask(task: updateTask));
+        setState(() {});
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: ContainerWidget(
+          padding: EdgeInsets.all(10),
+          // height: 180,
+          border: Border.all(color: Color(0xffD4D4D4)),
+          borderRadius: BorderRadius.circular(15),
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white,
+          child: Wrap(children: [
+            Row(
+              children: [
+                Align(
+                    alignment: Alignment.topLeft,
                     child: TextWidget(
-                      text: task.priority,
+                      text: widget.task.title.capitalizeFirstLetter(),
                       fontSize: 20,
+                      fontWeight: FontWeight.normal,
+                    )),
+                Spacer(),
+                Checkbox(
+                    value: widget.task.isCompleted,
+                    onChanged: (value) {
+                      final updateTask = widget.task.copyWith(
+                        isCompleted: value,
+                      );
+                      context.read<TaskBloc>().add(EditTask(task: updateTask));
+                    })
+              ],
+            ),
+            TextWidget(
+              text: widget.task.description,
+              fontWeight: FontWeight.normal,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.work_history,
+                  color: Theme.of(context).primaryColor,
+                ),
+                TextWidget(
+                  text: DateFormat('dd MMM yyyy').format(widget.task.startDate),
+                  fontSize: 12,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Icon(
+                  Icons.flag,
+                  color: Theme.of(context).primaryColor,
+                ),
+                TextWidget(
+                  text: DateFormat('dd MMM yyyy').format(widget.task.endDate),
+                  fontSize: 12,
+                ),
+                Spacer(),
+                ButtonWidget(
+                    height: 35,
+                    width: 80,
+                    color: widget.task.priority == 'Medium'
+                        ? Color(0xffCC00FF)
+                        : widget.task.priority == 'Low'
+                            ? Colors.amber
+                            : null,
+                    onPressed: () {},
+                    child: TextWidget(
+                      text: widget.task.priority,
+                      fontSize: 14,
                       color: Colors.white,
-                    ),
-                  ))
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconButton(
+                    ))
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      showTaskEditBottomSheet(context, widget.task);
+                    },
+                    icon: Icon(Icons.edit)),
+                SizedBox(
+                  width: 8,
+                ),
+                IconButton(
                   onPressed: () {
-                    showTaskEditBottomSheet(context, task);
+                    context
+                        .read<TaskBloc>()
+                        .add(DeleteTask(id: widget.task.id));
                   },
-                  icon: Icon(Icons.edit)),
-              SizedBox(
-                width: 8,
-              ),
-              IconButton(
-                onPressed: () {
-                  context.read<TaskBloc>().add(DeleteTask(id: task.id));
-                },
-                icon: Icon(Icons.delete),
-                padding: EdgeInsets.all(0),
-              ),
-            ],
-          )
-        ]),
+                  icon: Icon(Icons.delete),
+                  padding: EdgeInsets.all(0),
+                ),
+              ],
+            )
+          ]),
+        ),
       ),
     );
   }

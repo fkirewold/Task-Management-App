@@ -14,8 +14,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<EditTask>(_onEditTask);
     on<DeleteTask>(_onDeleteTask);
     on<GetTasks>(_onGetTasks);
-
-    
+    on<TaskFilter>(_onTaskFilter);
+    on<SearchTask>(_onSearchTask);
   }
   _onEditTask(EditTask event, Emitter emit) async {
     final tasks =
@@ -24,6 +24,20 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     emit(state.copyWith(
       tasks: tasks,
     ));
+  }
+
+  _onTaskFilter(TaskFilter event, Emitter emit) async {
+    final tasks = await Settings.getTasks();
+    if (event.filter == 'all') {
+      emit(state.copyWith(
+        tasks: tasks,
+      ));
+    } else if (event.filter == 'pending') {
+      emit(state.copyWith(
+          tasks: tasks.where((t) => t.isCompleted == false).toList()));
+    } else {
+      emit(state.copyWith(tasks: tasks.where((t) => t.isCompleted).toList()));
+    }
   }
 
   _onAddTask(AddTask event, Emitter emit) async {
@@ -36,17 +50,28 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       ),
     );
   }
-  _onDeleteTask(DeleteTask event,Emitter emit)
-  {
-final tasks=state.tasks;
-tasks.removeWhere((t)=>t.id==event.id);
-emit(state.copyWith(tasks:tasks));
 
-
+  _onDeleteTask(DeleteTask event, Emitter emit) async {
+    final tasks = state.tasks;
+    tasks.removeWhere((t) => t.id == event.id);
+    await Settings.deleteTask(event.id);
+    emit(state.copyWith(tasks: tasks));
   }
 
   _onGetTasks(GetTasks event, Emitter emit) async {
     final tasks = await Settings.getTasks();
+    emit(state.copyWith(
+      tasks: tasks,
+    ));
+  }
+  _onSearchTask(SearchTask event, Emitter emit) {
+    if( event.query.isEmpty)
+    {
+     emit(state.tasks,
+    );
+    }
+    final tasks =
+        state.tasks.where((t) => t.title.toLowerCase().contains(event.query.toLowerCase())).toList();
     emit(state.copyWith(
       tasks: tasks,
     ));

@@ -22,6 +22,7 @@ class ButtonWidget extends StatelessWidget {
       height: height ?? 45,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(0),
           shape: ContinuousRectangleBorder(
               borderRadius: BorderRadius.circular(30)),
           backgroundColor: color ?? Theme.of(context).primaryColor,

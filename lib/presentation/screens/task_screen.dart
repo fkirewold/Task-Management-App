@@ -6,7 +6,7 @@ import 'package:todo/presentation/widgets/button_widget.dart';
 import 'package:todo/presentation/widgets/container_widget.dart';
 import 'package:todo/presentation/widgets/task_tile_widget.dart';
 import 'package:todo/presentation/widgets/text_widget.dart';
-import 'package:todo/presentation/widgets/textfield_widget.dart';
+
 
 import '../../bloc/task/task_bloc.dart';
 
@@ -19,21 +19,32 @@ class TaskScreen extends StatefulWidget {
 
 class _TaskScreenState extends State<TaskScreen> {
   String selectedFilter = 'all';
+  late TextEditingController controller;
 
   @override
   void initState() {
     context.read<TaskBloc>().add(GetTasks());
+
+    controller = TextEditingController();
+    // Listen to text changes and update the state
+    controller.addListener(() {
+      setState(() {}); // Rebuild the widget when text changes
+    });
     super.initState();
-    
   }
-  
+
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
-  
     return Scaffold(
       appBar: AppBar(
+        elevation: 5,
         backgroundColor: Colors.white,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,30 +68,11 @@ class _TaskScreenState extends State<TaskScreen> {
             width: 10,
             color: Colors.yellow,
             shape: BoxShape.circle,
-            child: FutureBuilder(
-                future: Settings.getUserName(),
-                builder: (context, snapshot) {
-
-                  if(snapshot.connectionState==ConnectionState.active)
-                  {  if(snapshot.hasData)
-                        {
-                           String firstNameLetter =
-                      snapshot.data!.substring(0, 1).toUpperCase();
-                       return Center(
-                      child: TextWidget(
-                    text: firstNameLetter,
-                    fontSize: 26,
-                  ));
-
-                        }
-                  }
-                  return Center(
-                    child: TextWidget(text:'***',fontSize:26,
-                  ));
-                  
-                      
-                 
-                }),
+            image: DecorationImage(
+              image: AssetImage(
+                  'assets/images/imagepro.png'), // Load image from assets
+              fit: BoxFit.cover, // Ensure the image covers the container
+            ),
           ),
         ),
         actions: [
@@ -107,12 +99,36 @@ class _TaskScreenState extends State<TaskScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextfieldWidget(
-              hintText: 'find Your task here..',
-              controller: controller,
-              lebel: Icon(
-                Icons.search,
-                size: 25,
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: TextField(
+                controller: controller,
+                decoration: InputDecoration(
+                  hintText: 'Search tasks...', // Placeholder text
+                  prefixIcon: Icon(Icons.search), // Search icon
+                  suffixIcon: controller.text.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            controller.clear(); // Clear the text
+                          },
+                        )
+                      : null, // Clear button when text is entered
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ), // Rounded corners
+                  filled: true, // Fill the background
+                  fillColor: Colors.grey[200], // Light grey background
+                  contentPadding: EdgeInsets.symmetric(
+                      vertical: 12, horizontal: 16), // Padding inside the field
+                ),
+
+                keyboardType: TextInputType.text,
+                // Keyboard type for text input
+                onChanged: (value) {
+                  // Handle real-time search functionality
+                  context.read<TaskBloc>().add(SearchTask(query: value));
+                },
               ),
             ),
             Padding(
@@ -138,6 +154,9 @@ class _TaskScreenState extends State<TaskScreen> {
                           setState(() {
                             selectedFilter = 'all';
                           });
+                          context
+                              .read<TaskBloc>()
+                              .add(TaskFilter(filter: selectedFilter));
                         },
                         child: TextWidget(
                           text: 'all',
@@ -153,6 +172,9 @@ class _TaskScreenState extends State<TaskScreen> {
                           setState(() {
                             selectedFilter = 'pending';
                           });
+                          context
+                              .read<TaskBloc>()
+                              .add(TaskFilter(filter: selectedFilter));
                         },
                         child: TextWidget(
                             text: 'Pending',
@@ -169,6 +191,9 @@ class _TaskScreenState extends State<TaskScreen> {
                           setState(() {
                             selectedFilter = 'completed';
                           });
+                          context
+                              .read<TaskBloc>()
+                              .add(TaskFilter(filter: selectedFilter));
                         },
                         child: TextWidget(
                           text: 'Completed',

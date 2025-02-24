@@ -48,9 +48,14 @@ class Settings {
     preferences.setStringList(_tasksKey, storeList);
   }
 
-  // static Future<void> deleteTask(TaskModel id) async
-  // {
-  // final SharedPreferences preferences = await SharedPreferences.getInstance();
-
-  // }
+  static Future<void> deleteTask(int id) async
+  {
+  final SharedPreferences preferences = await SharedPreferences.getInstance();
+ List<String>  tasks= preferences.getStringList(_tasksKey)??[];
+List<TaskModel> tasksD= tasks.map((t)=>TaskModel.fromMap(jsonDecode(t))).toList();
+ tasksD.removeWhere((t)=>t.id==id);
+ List<String> list=tasksD.map((t)=>jsonEncode(t.toMap())).toList();
+ preferences.setStringList(_tasksKey,list);
+ 
+  }
 }
