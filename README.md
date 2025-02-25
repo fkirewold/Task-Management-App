@@ -15,6 +15,7 @@ A new Flutter project.
 Flutter – For building the mobile UI
 Dart – The programming language
 Bloc – For state management
+REST - For API integration
 
 A few resources to get you started if this is your first Flutter project:
 
