@@ -112,6 +112,7 @@ class _TaskScreenState extends State<TaskScreen> {
                           icon: Icon(Icons.clear),
                           onPressed: () {
                             controller.clear(); // Clear the text
+                            context.read<TaskBloc>().add(SearchTask(query: ''));
                           },
                         )
                       : null, // Clear button when text is entered
@@ -123,6 +124,9 @@ class _TaskScreenState extends State<TaskScreen> {
                   contentPadding: EdgeInsets.symmetric(
                       vertical: 12, horizontal: 16), // Padding inside the field
                 ),
+                onTapOutside: (d) {
+                  FocusScope.of(context).unfocus();
+                },
 
                 keyboardType: TextInputType.text,
                 // Keyboard type for text input
@@ -216,6 +220,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       children: [
                         for (var task in state.tasks)
                           TasktileWidget(
+                            filter: selectedFilter,
                             task: task,
                           )
                       ],

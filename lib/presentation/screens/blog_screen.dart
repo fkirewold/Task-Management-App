@@ -1,10 +1,9 @@
-import 'dart:convert';
-
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/presentation/widgets/text_widget.dart';
-import 'package:http/http.dart' as http;
+
+import '../../bloc/blog/blog_bloc.dart';
 
 class BlogScreen extends StatefulWidget {
   const BlogScreen({super.key});
@@ -14,37 +13,11 @@ class BlogScreen extends StatefulWidget {
 }
 
 class _BlogScreenState extends State<BlogScreen> {
-
-List<dynamic> posts = [];
-bool _isConnected = false;
-
   @override
   void initState() {
     super.initState();
-    checkInternetConnection();
-    fetchPosts();
+    context.read<BlogBloc>().add(FetchBlogs());
   }
-  Future<void> checkInternetConnection() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    setState(() {
-      _isConnected = connectivityResult != ConnectivityResult.none;
-    });
-  }
-  Future<void> fetchPosts() async {
-    if (!_isConnected) {
-      return; // Don't fetch data if there's no internet
-    }
-    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
-    if (response.statusCode == 200) {
-      setState(() {
-        posts = json.decode(response.body);
-      });
-    } else {
-      throw Exception('Failed to load posts');
-    }
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,28 +36,38 @@ bool _isConnected = false;
             icon: Icon(Icons.arrow_back_ios),
             color: Colors.white,
           )),
-      body: _isConnected? (posts.isEmpty
-              ? Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  itemCount: posts.length,
-                  itemBuilder: (context, index) {
-                    final post = posts[index];
-                    return ListTile(
-                      title: Text(post['title']),
-                      subtitle: Text(post['body']),
-                    );
-                  },
-                ))
-          :Center(
-              child: TextWidget(
-               text:'Looks like you\'re not connected to the internet',
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                           
+      body: BlocConsumer<BlogBloc, BlogState>(listener: (context, state) {
+        if (state is BlogError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.reason),
+              duration: Duration(seconds: 3), // Display for 3 seconds
+              action: SnackBarAction(
+                label: 'OK',
+                onPressed: () {
+                  // Action to perform when the user presses the action button
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
               ),
             ),
-      
+          );
+        }
+      }, builder: (context, state) {
+        return state is BlogLoading
+            ? Center(child: CircularProgressIndicator())
+            : (state is BlogSuccess)
+                ? ListView.builder(
+                    itemCount: state.blogs.length,
+                    itemBuilder: (context, index) {
+                      final blog = state.blogs[index];
+                      return ListTile(
+                        title: Text(blog.title),
+                        subtitle: Text(blog.body),
+                      );
+                    },
+                  )
+                : SizedBox();
+      }),
     );
   }
 }

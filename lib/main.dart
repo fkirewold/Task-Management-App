@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/bloc/task/task_bloc.dart';
 import 'package:todo/config/router.dart';
 
+import 'bloc/blog/blog_bloc.dart';
+
 void main() {
   runApp(Main());
 }
@@ -11,8 +13,15 @@ class Main extends StatelessWidget {
   const Main({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TaskBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => TaskBloc(),
+        ),
+        BlocProvider(
+          create: (context) => BlogBloc(),
+        ),
+      ],
       child: MaterialApp.router(
         routerConfig: Routes.goRouter,
         debugShowCheckedModeBanner: false,

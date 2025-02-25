@@ -11,7 +11,8 @@ import 'package:todo/presentation/widgets/text_widget.dart';
 
 class TasktileWidget extends StatefulWidget {
   final TaskModel task;
-  const TasktileWidget({super.key, required this.task});
+  final String filter;
+  const TasktileWidget({super.key, required this.task, required this.filter});
 
   @override
   State<TasktileWidget> createState() => _TasktileWidgetState();
@@ -26,7 +27,7 @@ class _TasktileWidgetState extends State<TasktileWidget> {
           isCompleted: !widget.task.isCompleted,
         );
         context.read<TaskBloc>().add(EditTask(task: updateTask));
-        setState(() {});
+        context.read<TaskBloc>().add(TaskFilter(filter: widget.filter));
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10),

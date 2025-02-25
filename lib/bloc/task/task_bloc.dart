@@ -64,11 +64,15 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       tasks: tasks,
     ));
   }
-  _onSearchTask(SearchTask event, Emitter emit) {
+  _onSearchTask(SearchTask event, Emitter emit) async{
     if( event.query.isEmpty)
     {
-     emit(state.tasks,
-    );
+    final tasks = await Settings.getTasks();
+      
+     emit(
+      state.copyWith(
+      tasks: tasks,
+     ));
     }
     final tasks =
         state.tasks.where((t) => t.title.toLowerCase().contains(event.query.toLowerCase())).toList();
