@@ -31,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 60, 50, 50),
       body: Center(
         child: Stack(children: [
           Container(
@@ -38,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
             width: 131,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Theme.of(context).primaryColor,
+              color: const Color.fromARGB(255, 39, 61, 80),
             ),
           ),
           Positioned(

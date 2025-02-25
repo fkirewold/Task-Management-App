@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo/presentation/widgets/container_widget.dart';
 import 'package:todo/presentation/widgets/text_widget.dart';
 
 import '../../bloc/blog/blog_bloc.dart';
@@ -64,46 +65,46 @@ class _BlogScreenState extends State<BlogScreen> {
                         elevation: 4,
                         margin:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.blue,
-                            child: Text(
-                              (index+1).toString(),
-                              style: TextStyle(color: Colors.white),
+                        child: ContainerWidget(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Color(0xffD4D4D4)),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.blue,
+                              child: Text(
+                                (index + 1).toString(),
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
-                          ),
-                          title: TextWidget(
-                            text: blog.title,
-                            fontSize: 16,
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                blog.body,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              SizedBox(height: 8),
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => PostDetailScreen(post: post),
-                                  //   ),
-                                  // );
-                                },
-                                child: Text('View Details'),
-                              ),
-                            ],
+                            title: TextWidget(
+                              text: blog.title,
+                              fontSize: 16,
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  blog.body,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: 8),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => PostDetailScreen(post: post),
+                                    //   ),
+                                    // );
+                                  },
+                                  child: Text('View Details'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
-                      // ListTile(
-                      //   title: Text(blog.title),
-                      //   subtitle: Text(blog.body),
-                      // );
                     },
                   )
                 : SizedBox();

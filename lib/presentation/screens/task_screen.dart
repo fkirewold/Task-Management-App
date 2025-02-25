@@ -71,7 +71,7 @@ class _TaskScreenState extends State<TaskScreen> {
             shape: BoxShape.circle,
             image: DecorationImage(
               image: AssetImage(
-                  'assets/images/imagepro.png'), // Load image from assets
+                  'assets/images/profileicon.png'), // Load image from assets
               fit: BoxFit.cover, // Ensure the image covers the container
             ),
           ),
