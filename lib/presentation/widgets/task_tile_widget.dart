@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/bloc/task/task_bloc.dart';
+import 'package:todo/core/utils/delete_confirm_alert_dialog.dart';
 import 'package:todo/core/utils/edit_show_bottom_task_sheet.dart';
 import 'package:todo/helper/string_extension.dart';
 import 'package:todo/models/task_model.dart';
@@ -108,21 +109,27 @@ class _TasktileWidgetState extends State<TasktileWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 IconButton(
+                    padding: EdgeInsets.all(0),
                     onPressed: () {
                       showTaskEditBottomSheet(context, widget.task);
                     },
                     icon: Icon(Icons.edit)),
+                Padding(
+                    padding: const EdgeInsets.only(top: 13),
+                    child: TextWidget(text: 'Edit', fontSize: 14)),
                 SizedBox(
                   width: 8,
                 ),
                 IconButton(
                   onPressed: () {
-                    context
-                        .read<TaskBloc>()
-                        .add(DeleteTask(id: widget.task.id));
+                    deleteConfirmAlertDialog(context, widget.task.id);
                   },
                   icon: Icon(Icons.delete),
                   padding: EdgeInsets.all(0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 13),
+                  child: TextWidget(text: "Delete", fontSize: 14),
                 ),
               ],
             )
